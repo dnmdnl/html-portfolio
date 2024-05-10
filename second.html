@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target Page</title>
+</head>
+<body>
+    <h1>Product Details</h1>
+    <div id="productDetails"></div>
+    <h2>Total Price</h2>
+    <div id="totalPrice"></div>
+    <script>
+        // Retrieve the arrays of titles and prices from sessionStorage
+        let titles = JSON.parse(sessionStorage.getItem('productTitles')) || [];
+        let prices = JSON.parse(sessionStorage.getItem('productPrices')) || [];
+
+        // Function to remove an item from sessionStorage and update the display
+        function removeItem(index) {
+            titles.splice(index, 1);
+            prices.splice(index, 1);
+            sessionStorage.setItem('productTitles', JSON.stringify(titles));
+            sessionStorage.setItem('productPrices', JSON.stringify(prices));
+            displayProductDetails();
+            computeTotalPrice();
+        }
+
+        // Function to display the product details
+        function displayProductDetails() {
+            const productDetailsElement = document.getElementById('productDetails');
+            productDetailsElement.innerHTML = '';
+            titles.forEach((title, index) => {
+                productDetailsElement.innerHTML += `
+                    <p>Title ${index + 1}: ${title} <button onclick="removeItem(${index})">Remove</button></p>
+                    <p>Price ${index + 1}: ${prices[index]}</p>
+                    <hr>
+                `;
+            });
+        }
+
+        // Function to compute and display the total price
+        function computeTotalPrice() {
+            const totalPriceElement = document.getElementById('totalPrice');
+            const total = prices.reduce((accumulator, price) => accumulator + parseFloat(price.replace(/[^\d.]/g, '')), 0);
+            totalPriceElement.innerHTML = `Total Price: &#8369 ${total.toFixed(2)}`;
+        }
+
+        // Initial display
+        displayProductDetails();
+        computeTotalPrice();
+    </script>
+</body>
+</html>

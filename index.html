@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source Page</title>
+</head>
+<body>
+    <div class="right-column">
+        <p class="wp-title">Summer Crossing Digital Wallpaper</p>
+        <p class="prod-price">&#8369 850.00</p>
+        <button id="transferBtn">Add to Cart</button>
+        <button id="viewDataBtn">View Cart</button>
+    </div>
+	<div class="right-column">
+        <p class="wp-title">Summer Crossing Digital Wallpaper</p>
+        <p class="prod-price">&#8369 1000.00</p>
+        <button id="transferBtn">Add to Cart</button>
+        <button id="viewDataBtn">View Cart</button>
+    </div>
+    <script>
+        document.getElementById('transferBtn').addEventListener('click', function() {
+            const title = document.querySelector('.wp-title').innerText;
+            const price = document.querySelector('.prod-price').innerText;
+
+            // Retrieve existing data from sessionStorage or initialize an empty array
+            let titles = JSON.parse(sessionStorage.getItem('productTitles')) || [];
+            let prices = JSON.parse(sessionStorage.getItem('productPrices')) || [];
+
+            // Add new title and price to the arrays
+            titles.push(title);
+            prices.push(price);
+
+            // Store the updated arrays in sessionStorage
+            sessionStorage.setItem('productTitles', JSON.stringify(titles));
+            sessionStorage.setItem('productPrices', JSON.stringify(prices));
+
+            // Redirect to the target page
+        
+        });
+
+        document.getElementById('viewDataBtn').addEventListener('click', function() {
+            // Redirect to the target page to view stored data
+            window.location.href = 'second.html';
+        });
+    </script>
+</body>
+</html>
